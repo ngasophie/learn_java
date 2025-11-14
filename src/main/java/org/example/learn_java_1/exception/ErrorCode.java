@@ -3,10 +3,13 @@ package org.example.learn_java_1.exception;
 public enum ErrorCode {
     USER_EXISTED(1001, "user existed"),
     USER_NOT_FOUND(1002, "user not found"),
-    UNCATEGORIZED_EXCEPTION(9999, "uncategorized exception"),
-    INVALID_ARGUMENT(10000, "INVALID_ARGUMENT"),
     INVALID_MESSAGE_KEY(1004, "INVALID_ARGUMENT"),
-    MIN_PASSWORD(1003, "password must be at least 4 characters");
+    MIN_PASSWORD(1003, "password must be at least 4 characters"),
+    USER_NOT_EXISTED(1005, "user not existed"),
+    UNAUTHENTICATED(1007, "Unauthenticated"),
+    UNCATEGORIZED_EXCEPTION(9999, "uncategorized exception"),
+    INVALID_ARGUMENT(10000, "INVALID_ARGUMENT");
+
     private int code;
     private String message;
 

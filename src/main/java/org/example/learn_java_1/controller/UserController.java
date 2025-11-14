@@ -1,20 +1,24 @@
 package org.example.learn_java_1.controller;
 
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.example.learn_java_1.entity.User;
-import org.example.learn_java_1.request.ApiResponse;
+import org.example.learn_java_1.response.ApiResponse;
 import org.example.learn_java_1.request.UserCreationRequest;
 import org.example.learn_java_1.request.UserUpdateRequest;
+import org.example.learn_java_1.response.UserResponse;
 import org.example.learn_java_1.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("users")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
-    @Autowired
     private UserService userService;
     @PostMapping()
     ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request) {
@@ -23,8 +27,8 @@ public class UserController {
         return response;
     }
     @GetMapping()
-    ApiResponse<List<User>> getListUsers() {
-        ApiResponse<List<User>> response = new ApiResponse<>();
+    ApiResponse<List<UserResponse>> getListUsers() {
+        ApiResponse<List<UserResponse>> response = new ApiResponse<>();
         response.setResult(userService.getUsers());
         return response;
     }

@@ -1,36 +1,41 @@
 package org.example.learn_java_1.service;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.example.learn_java_1.entity.User;
 import org.example.learn_java_1.exception.AppException;
 import org.example.learn_java_1.exception.ErrorCode;
+import org.example.learn_java_1.mapper.UserMapper;
 import org.example.learn_java_1.repository.UserRepository;
 import org.example.learn_java_1.request.UserCreationRequest;
 import org.example.learn_java_1.request.UserUpdateRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.learn_java_1.response.UserResponse;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
-    @Autowired
     UserRepository userRepository;
+    UserMapper userMapper;
 
     public User createUser(UserCreationRequest request) {
-        User user = new User();
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("User existed");
         }
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setPassword(request.getPassword());
-        user.setDob(request.getDob());
-        user.setUsername(request.getUsername());
+        User user = userMapper.toUser(request);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         return this.userRepository.save(user);
     }
 
-    public List<User> getUsers() {
-        return this.userRepository.findAll();
+    public List<UserResponse> getUsers() {
+        return this.userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
     public User getUserById(String id) {
@@ -39,10 +44,7 @@ public class UserService {
 
     public User updateUser(String userId, UserUpdateRequest request) {
         User user = this.getUserById(userId);
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setPassword(request.getPassword());
-        user.setDob(request.getDob());
+        userMapper.updateUser(user, request);
         return this.userRepository.save(user);
     }
 

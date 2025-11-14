@@ -1,5 +1,6 @@
-package org.example.learn_java_1.request;
+package org.example.learn_java_1.response;
 
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,8 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserUpdateRequest {
-    private String password;
+public class UserResponse {
+    private String username;
     private String firstName;
     private String lastName;
     private LocalDate dob;

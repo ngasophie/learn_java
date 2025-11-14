@@ -1,11 +1,10 @@
 package org.example.learn_java_1.exception;
 
-import org.example.learn_java_1.request.ApiResponse;
+import org.example.learn_java_1.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 @ControllerAdvice
 public class GlobalException {
     @ExceptionHandler(value = RuntimeException.class)
