@@ -5,8 +5,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.example.learn_java_1.request.AuthenticationRequest;
+import org.example.learn_java_1.request.IntrospectRequest;
 import org.example.learn_java_1.response.ApiResponse;
 import org.example.learn_java_1.response.AuthenticationResponse;
+import org.example.learn_java_1.response.IntrospectResponse;
 import org.example.learn_java_1.service.AuthenticationService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,12 @@ public class AuthenticationController {
     ApiResponse<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest request) {
         ApiResponse<AuthenticationResponse> response = new ApiResponse<>();
         response.setResult(service.authenticate(request));
+        return response;
+    }
+    @RequestMapping("/introspect")
+    ApiResponse<IntrospectResponse> introspect(@RequestBody @Valid IntrospectRequest request) {
+        ApiResponse<IntrospectResponse> response = new ApiResponse<>();
+        response.setResult(service.introspect(request));
         return response;
     }
 }

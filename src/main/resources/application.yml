@@ -8,3 +8,5 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+jwt:
+  signerKey: "S9IE4URbeTkCrr1XP8jWEvvo4DqmcHLxckR3m7l4B6BssDB9uEcIG9xoYouVeLxT3udFeOSQfHRDsKMeuUS35j"
