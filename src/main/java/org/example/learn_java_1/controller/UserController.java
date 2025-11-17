@@ -57,4 +57,10 @@ public class UserController {
         response.setResult("Success");
         return response;
     }
+    @GetMapping("/my-profile")
+    ApiResponse<UserResponse> getProfile() {
+        ApiResponse<UserResponse> response = new ApiResponse<>();
+        response.setResult(userService.getProfile());
+        return response;
+    }
 }
