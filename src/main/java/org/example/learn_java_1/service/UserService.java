@@ -9,6 +9,7 @@ import org.example.learn_java_1.enums.Role;
 import org.example.learn_java_1.exception.AppException;
 import org.example.learn_java_1.exception.ErrorCode;
 import org.example.learn_java_1.mapper.UserMapper;
+import org.example.learn_java_1.repository.RoleRepository;
 import org.example.learn_java_1.repository.UserRepository;
 import org.example.learn_java_1.request.UserCreationRequest;
 import org.example.learn_java_1.request.UserUpdateRequest;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -31,20 +33,20 @@ public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
-
+    RoleRepository roleRepository;
     public User createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
-//        user.setRoles(roles);
+        var roles = roleRepository.findAllById(request.getRoleIds());
+
+        user.setRoles(new HashSet<>(roles));
         return this.userRepository.save(user);
     }
 
-    @PreAuthorize("hasRole('ADMIN')") // check quyen trc khi method goi
+    @PreAuthorize("hasAnyAuthority('role_xxx')") // check quyen trc khi method goi
 
     public List<UserResponse> getUsers() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -61,6 +63,9 @@ public class UserService {
     public User updateUser(String userId, UserUpdateRequest request) {
         User user = this.getUserById(userId);
         userMapper.updateUser(user, request);
+        var roles = roleRepository.findAllById(request.getRoleIds());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRoles(new HashSet<>(roles));
         return this.userRepository.save(user);
     }
 

@@ -1,10 +1,12 @@
 package org.example.learn_java_1.request;
-
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,4 +21,5 @@ public class UserCreationRequest {
     private String firstName;
     private String lastName;
     private LocalDate dob;
+    private List<String> roleIds;
 }
