@@ -17,5 +17,16 @@ spring:
     default-property-inclusion: non_null
     serialization:
       indent_output: true
+
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL=DEBUG:
+          type:
+            descriptor:
+              sql:
+                BasicBinder=TRACE:
+
 jwt:
   signerKey: "S9IE4URbeTkCrr1XP8jWEvvo4DqmcHLxckR3m7l4B6BssDB9uEcIG9xoYouVeLxT3udFeOSQfHRDsKMeuUS35j"
