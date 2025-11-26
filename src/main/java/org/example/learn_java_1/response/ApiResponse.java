@@ -14,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ApiResponse<T> {
+    @Builder.Default
     private Integer code = 1000;
     private String message;
     private T result;

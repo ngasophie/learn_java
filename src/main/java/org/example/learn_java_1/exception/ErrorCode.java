@@ -12,7 +12,7 @@ public enum ErrorCode {
     MIN_PASSWORD(1003, "password must be at least 4 characters", HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED(1005, "user not existed", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1007, "Unauthenticated", HttpStatus.UNAUTHORIZED),
-    INVALID_DOB(1008, "Invalid date of birth", HttpStatus.BAD_REQUEST),
+    INVALID_DOB(1008, "Your date of birth must be at least {min}", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(9999, "uncategorized exception", HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_ARGUMENT(10000, "INVALID_ARGUMENT", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED(20000, "unauthorized", HttpStatus.FORBIDDEN);
